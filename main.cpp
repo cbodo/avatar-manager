@@ -1,4 +1,3 @@
-//Craig Bodo, CS 202, May 2018
 //This program allows a client application to track a player's
 //gaming statistics via a character avatar. This program is
 //designed to demonstrate the use of operator overloading

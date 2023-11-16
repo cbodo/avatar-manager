@@ -499,6 +499,34 @@ void tree::new_tree(const chest & to_add)
 //Overloads the + operator
 tree tree::operator + (const node & to_add) const
 {
+	if(to_add == NULL) return *this;
+	if(!this->root)
+	{
+		*this->root = to_add;
+		root->left() = root->middle() = root->right() = NULL;
+	}
+	else if(this->root->is_leaf())
+		*this->root += to_add;
+	else if(this->root->two_node())
+	{
+		if(*this->root > to_add)
+			*this->root->left() += to_add;
+		if(*this->root <= to_add)
+			*this->root->right() += to_add;
+	}
+	else
+	{
+		if(*this->root > to_add)
+			*this->root->left() += to_add;
+		if(*this->root <= to_add)
+		{
+			if(*this->root->middle() <= to_add)
+				*this->root->right() += to_add;
+			else
+				*this->root->middle() += to_add;
+		}
+	}
+	return *this;
 }
 
 //Overloads the += operator
@@ -678,6 +706,7 @@ node *& tree::traverse(node *& root) const
 		traverse(root->middle());
 		traverse(root->right());
 	}
+	return root;
 }
 
 //Removes all nodes in the 2-3 tree
